@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<style>
+  th
+  {
+    user-select: none;
+  }
+</style>
+  <head>
+    <meta charset="utf-8">
+    <title>เลือกที่นั่ง</title>
+    <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  </head>
+  <body style="background-color:#990000">
+    <div class=" odd-cotainkk" style="background-color:#ffcccc"  >
+
+<label class="headcomplain"> Confirm</label>
+        <br>
+
+        <form>
+        <img id="pic" class="poinimgh" src="" width=200px height=250px>
+        <div style="text-align: center;">
+          <label id="bname" class="poinhc"></label>
+          <label id="mname" class="poinhc"></label>
+          <label id="tno" class="poinhc"></label>
+          <label id="time" class="poinhc"></label>
+        </div>
+
+          <a href="#" onclick="check()" class="bottom">ยืนยัน</a>
+          <a href="theatertime.html" class="bottom" style="background-color: transparent; color:blue; border-width:0px;">ย้อนกลับ</a>
+        </form>
+
+
+
+
+</div>
+
+<br><br>
+    <table width=100% height=100px border="20" style="background-color:#CCFF99">
+
+          <th id="screen">SCREEN</th>
+    </table>
+    <br><br>
+
+    <table id="seat" width=100% height=1000px border="10"style="background-color:#CCFFFF">
+    </table>
+  </body>
+  <script>
+    let seat = [];
+    let id = [];
+    let price = 0;
+    if (sessionStorage.tempNo != null) {
+      sessionStorage.removeItem("tempNo");
+    }
+    if (sessionStorage.tempPrice != null) {
+      sessionStorage.removeItem("tempPrice");
+    }
+    $(document).ready(function(){
+      $.ajax({
+        url: "../php/sql.php",
+        type: "POST",
+        async: true,
+        data: {
+          sql: "select s.id, seat_no, price, pic, t.id as tid from seat s join seatType st on s.seatType_id = st.id left join ticket t on t.seat_id = s.id and t.show_time_id = "+sessionStorage.tempShowtime+" where theater_id = "+sessionStorage.tempTheater
+        },
+        success: function(e) {
+          let reply = JSON.parse(e);
+          let col = 1;
+          let row = 1;
+          for (i in reply)
+          {
+            if (col == 8) {
+              col = 1;
+              row++;
+            }
+            if (col == 1) {
+              $("#seat").append('<tr id="r'+row+'"></tr>');
+            }
+            if (reply[i]['tid'] == null) {
+              $("#r"+row).append('<th price="'+reply[i]['price']+'" id="'+reply[i]['id']+'" name="'+reply[i]['seat_no']+'"><img src="../pic/'+reply[i]['pic']+'" width=50px height=50px><br>NO.'+reply[i]['seat_no']+'</th>');
+            } else {
+              $("#r"+row).append('<th style="background-color:#eb4034;"><img src="../pic/'+reply[i]['pic']+'" width=50px height=50px><br>NO.'+reply[i]['seat_no']+'</th>');
+            }
+            col++;
+          }
+        }
+      });
+    });
+    $(document).ajaxComplete(function(){
+      $("#pic").attr('src', "../pic/"+sessionStorage.tempPic);
+      $("#bname").html("Branch: "+sessionStorage.tempBranchName);
+      $("#mname").html("Movie: "+sessionStorage.tempMovieName);
+      $("#tno").html("Theater: No."+sessionStorage.tempTheaterNo);
+      $("#time").html("Time: "+sessionStorage.tempTime);
+      $("th:not(#screen)").click(function(){
+        if ($(this).css('background-color') == 'rgb(235, 64, 52)') {
+          return;
+        }
+        if ($(this).css('background-color') == 'rgba(0, 0, 0, 0)') {
+          $(this).css('background-color', '#5de3dc');
+          seat[$(this).attr('name')] = $(this).attr('name');
+          id[$(this).attr('id')] = $(this).attr('id');
+          price += parseInt($(this).attr('price'));
+        } else {
+          $(this).css('background-color', '');
+          delete seat[$(this).attr('name')];
+          delete id[$(this).attr('id')];
+          price -= parseInt($(this).attr('price'));
+        }
+        sessionStorage.tempPrice = price;
+        sessionStorage.tempNo = JSON.stringify(seat);
+        sessionStorage.tempSeatId = JSON.stringify(id);
+      });
+    });
+    function check() {
+      if (sessionStorage.tempNo != null) {
+        window.location = "selectinformation.html";
+      } else {
+        alert("กรุณาเลือกที่นั่ง");
+      }
+    }
+  </script>
+</html>

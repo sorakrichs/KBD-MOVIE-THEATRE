@@ -1,0 +1,152 @@
+<!doctype html>
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>จัดการบัตร</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/fontAwesome.css">
+        <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
+
+
+    <body style="background-image:url('../pic/fan.jpg')" >
+
+        <div class="overlay"></div>
+        <section  class="top-part"  >
+
+        </section>
+
+        <section class="cd-hero">
+
+          <div class="cd-slider-nav">
+            <nav>
+
+              <span class="cd-marker item-1"></span>
+<ul>
+        <li ><a ><div ><img src="../pic/popcorn.jpg"width=400px height=400px></div><h6>สินค้าที่ห้ามพลาดระหว่างรับชมภาพยนต์</h6></a></li>
+
+</ul>
+
+
+                </nav>
+          </div> <!-- .cd-slider-nav -->
+
+          <ul class="cd-hero-slider" >
+
+            <li class="selected"  style="background-color:#000000">
+              <div class="heading"  >
+                <h1>Manage Card</h1>
+                <span>Welcome To our movie theater</span>
+                <br>
+                <a style="font-size:20px;" href="fornforlogin.html" class="bottom-link">Back</a>
+              </div>
+              <div class="cd-full-width first-slide"  style="background-color:#000000">
+                <div class="container" >
+                  <div class="row" >
+                    <div class="col-md-12">
+
+                      <div class=" odd-cotainkk" style="background-color:#ffcccc">
+
+                          <label class="headcomplain"> ข้อมูลบัตรทั้งหมด </label>
+                          <table class="pointik">
+                            <tr>
+                              <td id="name_th">ชื่อ: คริษฐ์ เอกบวรภาค</td>
+                              <td id="name_en">Name: Karit Eakbovornphak</td>
+                            </tr>
+                            <tr>
+                              <td id="cid">เลขบัตรประชาชน: 1102422222</td>
+                              <td id="email">Email: karitmmm@kuygon.com</td>
+                            </tr>
+                            <tr>
+                              <td id="tel">โทร: 0909870485</td>
+                              <td id="dob">วัน-เดือน-ปีเกิด : 09/09/099999</td>
+                            </tr>
+                          </table>
+                      </div>
+                      <div class="content first-contenten" style="background-color:	#CCFFCC; padding:0px" >
+                        <form action="../php/delCard.php" method="post">
+                          <table id="table" border="2"style="background-color:#CCFFFF; width:100%">
+                            <thead>
+                              <tr>
+                                <th class="centertb" style="font-size:25px;">&nbsp;</th>
+                                <th class="centertb" style="font-size:25px;">หมายเลขบัตร</th>
+                                <th class="centertb" style="font-size:25px;">ชนิด</th>
+                                <th class="centertb" style="font-size:25px;">วันหมดอายุ</th>
+                                <th class="centertb" style="font-size:25px;">สาขา</th>
+                                <th class="centertb" style="font-size:25px;">คะแนน</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                          </table>
+                          <div>
+                            <input style="margin:10px; width:15%; font-size:20px; background-color:orange;" type="button" onclick="del()" value="ลบบัตรที่เลือก">
+                            <button type="submit" style="display:none;"></button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+
+
+
+                <footer style="background-color:#CCFF66" >
+                  <p>Movie Theater &copy; KBD-COMPANY
+
+                  | Designed by <a href="https://www.facebook.com/KaRiTOi11" target="_parent"><em>Karit</em></a></p>
+                </footer>
+    </body>
+    <script>
+      $(document).ready(function(){
+        $("#name_th").html("ชื่อ: "+sessionStorage.name_th);
+        $("#name_en").html("Name: "+sessionStorage.name_en);
+        $("#cid").html("เลขบัตรประชาชน: "+sessionStorage.cid);
+        $("#email").html("Email: "+sessionStorage.email);
+        $("#tel").html("โทร: "+sessionStorage.tel);
+        $("#dob").html("วัน-เดือน-ปีเกิด: "+sessionStorage.dob);
+        $.ajax({
+          url: "../php/sql.php",
+          type: "POST",
+          data: {
+            sql:"select c.id, c.card_no, ct.name, c.expire_date, b.name_th, c.point from card c, branch b, cardType ct where c.cardType_id = ct.id and c.branch_id = b.id and c.customer_id = "+sessionStorage.id
+          },
+          async: false,
+          success: function(e) {
+            let reply = JSON.parse(e);
+            for (i in reply)
+            {
+              $("#table tbody").append('<tr><td><input name="'+i+'" value="'+reply[i]['id']+'" type="checkbox" style="transform:scale(1.5)"></td><td class="centertb">'+reply[i]['card_no']+'</td><td class="centertb">'+reply[i]['name']+'</td><td class="centertb">'+reply[i]['expire_date']+'</td><td class="centertb">'+reply[i]['name_th']+'</td><td class="centertb">'+reply[i]['point']+'</td></tr>');
+            }
+          }
+        });
+        $("tr").click(function(){
+          if ($(this).find('input').prop('checked') == false)
+            $(this).find('input').prop('checked', true);
+          else
+            $(this).find('input').prop('checked', false);
+        });
+      });
+      function del(){
+        if ($("input:checked").length == 0) {
+          return;
+        }
+        if (confirm("ยืนยันลบบัตร "+$("input:checked").length+" ใบ") == true) {
+          $("[type=submit]").click();
+        }
+      }
+    </script>
+</html>

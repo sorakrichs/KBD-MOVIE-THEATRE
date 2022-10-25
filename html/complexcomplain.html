@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html >
+
+  <head>
+    <meta charset="utf-8">
+    <title>ให้คำสนับสนุน</title>
+
+
+        <link rel="stylesheet" type="text/css" href="../css/normalize.css">
+      <link rel="stylesheet" type="text/css" href="../css/movie.css" >
+      <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+      <link rel="stylesheet" type="text/css" href="../css/fontAwesome.css">
+      <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  </head>
+
+  <body style="background-image:url('../pic/conpla1.jpg')"  >
+
+
+    <div class=" odd-cotaincomplain"   >
+
+        <h4 class="headcomplain" >Branch Complain Form</h4>
+        <br>
+        <form style="margin-top:10px; padding:10px" action="../php/complain.php" method="post">
+          <div class="regis">
+            <label class="newpoinbox">Branch:</label>
+            <select id="select" name="branch" class="sleregis2" style="width:70%; float:right;">
+            </select>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Name:</label>
+            <input name="name" type="text" class="newpoinbox" placeholder="Name" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Email:</label>
+            <input name="email" type="text" class="newpoinbox" placeholder="Email" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Telephone:</label>
+            <input name="tel" type="text" class="newpoinbox" placeholder="Telephone" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Description:</label>
+            <textarea name="description" class="poindis" name="description" rows="8" cols="80" required></textarea>
+          </div>
+
+          <button type="submit" class="loginC"> Complain </button>
+
+
+          <a href="fornforlogin.html" class="bottom-link">Back</a>
+        </form>
+
+                <footer style="background-color:#CCFF66"  >
+                  <p>Movie Theater &copy; KBD-COMPANY
+
+                  | Designed by <a href="https://www.facebook.com/KaRiTOi11" target="_parent"><em>Karit</em></a></p>
+                </footer>
+
+    </div>
+  </body>
+
+<script>
+  $(document).ready(function(){
+    $.ajax({
+      url: "../php/sql.php",
+      type: "POST",
+      async: false,
+      data: {
+        sql: "select id, name_th, name_en from branch"
+      },
+      success: function(e) {
+        let reply = JSON.parse(e);
+        for (i in reply)
+        {
+          $("#select").append(new Option(reply[i]['name_en'], reply[i]['id']));;
+        }
+      }
+    });
+    $("[name=name]").val(sessionStorage.name_en);
+    $("[name=email]").val(sessionStorage.email);
+    $("[name=tel]").val(sessionStorage.tel);
+  });
+</script>
+</html>

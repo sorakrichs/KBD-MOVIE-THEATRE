@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html >
+
+  <head>
+    <meta charset="utf-8">
+    <title> movie.Historyticket</title>
+
+
+        <link rel="stylesheet" type="text/css" href="../css/normalize.css">
+      <link rel="stylesheet" type="text/css" href="../css/movie.css" >
+      <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+      <link rel="stylesheet" type="text/css" href="../css/fontAwesome.css">
+      <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
+
+  <body style="background-image:url('../pic/major.png')"  >
+
+
+    <div class="odd-cotainregister">
+
+        <h4 class="headcomplain">Register</h4>
+        <form action="../php/register.php" method="post" style="margin-top:10px; padding:10px">
+          <div class="regis">
+            <div style="float:left; width:50%; padding-right:5px;">
+              <label class="newpoinbox">Name_th:</label>
+              <input name="name_th" type="text" class="newpoinbox" placeholder="name_th" style="width:100%;" required>
+            </div>
+            <div style="float:left; width:50%; padding-left:5px;">
+              <label class="newpoinbox">Name_en:</label>
+              <input name="name_en" type="text" class="newpoinbox" placeholder="name_en" style="width:100%;" required>
+            </div>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Citizen ID:</label>
+            <input name="cid" type="text" class="newpoinbox" placeholder="Citizen ID" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Email:</label>
+            <input name="email" type="text" class="newpoinbox" placeholder="Email" style="width:80%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Phone:</label>
+            <input name="phone" type="text" class="newpoinbox" placeholder="Phone" style="width:80%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox">Dath of birth:</label>
+            <input name="dob" type="date" class="newpoinbox" placeholder="Email" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox" >Password:</label>
+            <input name="pass" type="password" class="newpoinbox" placeholder="Password" style="width:70%; float:right;" required>
+          </div>
+          <div class="regis">
+            <label class="newpoinbox" >Confirm Password:</label>
+            <input type="password" class="newpoinbox" placeholder="Confirm Password" style="width:60%; float:right;" required>
+          </div>
+          <div id="card1">
+            <div class="regis">
+              <hr style="border:0px;height:2px;background-color:black;">
+              <div style="width:30%; float:left;">
+                <label class="newpoinbox">Card type:</label>
+              </div>
+              <select name="cardType1" class="sleregis2">
+                <option value="2">M-Pass</option>
+                <option value="3">M-Generation</option>
+                <option value="4">M-Generation-Student</option>
+                <option value="5">M-Generation-Kids</option>
+                <option value="6">M-Generation-Freedom</option>
+              </select>
+            </div>
+            <div class="regis">
+              <label class="newpoinbox" >Card number:</label>
+              <input name="cardNumber1" type="text" class="newpoinbox" placeholder="Card number" style="width:70%; float:right;" required>
+            </div>
+            <button style="float:right;" type="button" onclick="addCard2()" id="btnp1">+</button>
+          </div>
+          <div id="card2" style="display:none;">
+            <div class="regis">
+              <hr style="border:0px;height:2px;background-color:black;">
+              <div style="width:30%; float:left;">
+                <label class="newpoinbox">Card type:</label>
+              </div>
+              <select name="cardType2" class="sleregis2">
+                <option value="2">M-Pass</option>
+                <option value="3">M-Generation</option>
+                <option value="4">M-Generation-Student</option>
+                <option value="5">M-Generation-Kids</option>
+                <option value="6">M-Generation-Freedom</option>
+              </select>
+            </div>
+            <div class="regis">
+              <label class="newpoinbox" >Card number:</label>
+              <input name="cardNumber2" id="cn2" type="text" class="newpoinbox" placeholder="Card number" style="width:70%; float:right;">
+            </div>
+            <button style="float:left;" type="button" onclick="delCard2()" id="btnm2">-</button>
+            <button style="float:right;" type="button" onclick="addCard3()" id="btnp2">+</button>
+          </div>
+          <div id="card3" style="display:none;">
+            <div class="regis">
+              <hr style="border:0px;height:2px;background-color:black;">
+              <div style="width:30%; float:left;">
+                <label class="newpoinbox">Card type:</label>
+              </div>
+              <select name="cardType3" class="sleregis2">
+                <option value="2">M-Pass</option>
+                <option value="3">M-Generation</option>
+                <option value="4">M-Generation-Student</option>
+                <option value="5">M-Generation-Kids</option>
+                <option value="6">M-Generation-Freedom</option>
+              </select>
+            </div>
+            <div class="regis">
+              <label class="newpoinbox" >Card number:</label>
+              <input name="cardNumber3" id="cn3" type="text" class="newpoinbox" placeholder="Card number" style="width:70%; float:right;">
+            </div>
+            <button style="float:left;" type="button" onclick="delCard3()" id="btnm3">-</button>
+          </div>
+
+          <button type="button" class="loginC" onclick="check()"> Register </button>
+          <button type="submit" style="display:none;"></button>
+          <input name="branch_id" style="display:none;">
+        </form>
+
+          <a href="Login.html" class="bottom-link">ไปหน้า Login</a>
+          <a href="../index.html" class="bottom-link">กลับหน้าแรก</a>
+
+                <footer style="background-color:#CCFF66"  >
+                  <p>Movie Theater &copy; KBD-COMPANY
+
+                  | Designed by <a href="https://www.facebook.com/KaRiTOi11" target="_parent"><em>Karit</em></a></p>
+                </footer>
+
+    </div>
+  </body>
+
+<script>
+  function addCard2() {
+    $("#card2").show();
+    $("#btnp1").hide();
+    $("#cn2").prop("required", true);
+  }
+  function delCard2() {
+    $("#card2").hide();
+    $("#btnp1").show();
+    $("#cn2").prop("required", false);
+    $("#cn2").val(null);
+  }
+  function addCard3() {
+    $("#card3").show();
+    $("#btnp2").hide();
+    $("#btnm2").hide();
+    $("#cn3").prop("required", true);
+  }
+  function delCard3() {
+    $("#card3").hide();
+    $("#btnp2").show();
+    $("#btnm2").show();
+    $("#cn3").prop("required", false);
+  }
+  function check() {
+    let pass = $("input[type=password]");
+    if (pass[0].value != pass[1].value) {
+      alert("password ไม่ตรงกัน");
+      pass.val(null)
+    } else {
+      $("input[name=branch_id]").val(sessionStorage.branch_id);
+      $("button[type=submit]").click();
+    } 
+  }
+</script>
+
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>เลือกรอบฉาย</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/fontAwesome.css">
+        <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
+
+
+    <body style="background-image:url('../pic/fan.jpg')" >
+
+        <div class="overlay"></div>
+        <section  class="top-part"  >
+
+        </section>
+
+        <section class="cd-hero">
+
+          <div class="cd-slider-nav">
+            <nav>
+
+              <span class="cd-marker item-1"></span>
+<ul>
+  <li ><a ><div ><img src="../pic/movie.jpg"width=550px height=550px onmouseover="this.src='../pic/movie4.jpg' ; "
+                onmouseout="this.src='../pic/movie.jpg' ;"></div><h6>หนังน่าดูประจำเดือน</h6></a></li>
+
+</ul>
+
+
+                </nav>
+          </div> <!-- .cd-slider-nav -->
+
+          <ul class="cd-hero-slider" >
+
+            <li class="selected"  style="background-color:#000000">
+              <div class="heading"  >
+                <h1>Movie</h1>
+                <span>Welcome To our movie theater</span>
+              </div>
+              <div class="cd-full-width first-slide"  style="background-color:#000000">
+                <div class="container" >
+                  <div class="row" >
+
+                    <div class="col-md-12">
+
+
+                      <div class="content first-contenten" style="background-image:url('../pic/spy.jpg'); padding-top:0px; height:100%;"  >
+                      <h1 id="header"></h1>
+                      <div class="odd-cotainmovie">
+                        <div id="main">
+                        </div>
+                        <div class="primary-buttonright">
+                          <a href="bramovie.html">Back</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+
+
+
+
+                <footer style="background-color:#CCFF66" >
+                  <p>Movie Theater &copy; KBD-COMPANY
+
+                  | Designed by <a href="https://www.facebook.com/KaRiTOi11" target="_parent"><em>Karit</em></a></p>
+                </footer>
+    </body>
+  <script>
+    $(document).ready(function(){
+      $.ajax({
+        url: "../php/sql.php",
+        type: "POST",
+        async: false,
+        data: {
+          sql: "select st.showtime, st.id, m.name_th, b.name_th as tname, t.type, m.pic, st.theater_id as tid, t.theater_no from show_time st, movie m, theater t, branch b where st.theater_id = t.id and st.movie_id = m.id and  t.branch_id = b.id and b.id = "+sessionStorage.tempBranch+" and m.id = "+sessionStorage.tempmovie
+        },
+        success: function(e) {
+          let reply = JSON.parse(e);
+          $("#header").html(reply[0]['name_th']+'<br>'+reply[0]['tname']);
+          for (i in reply)
+          {
+            if (!$("#p"+reply[i]['theater_no']).length) {
+              $("#main").append($('<div id="p'+reply[i]['theater_no']+'">'));
+              $("#main #p"+reply[i]['theater_no']).append($('<label class="headcomplain" style="height:100%;"> Theater'+reply[i]['theater_no']+'<br>'+reply[i]['type']+'</label>'));
+              $("#main #p"+reply[i]['theater_no']).append($('<img class="poinimg"src="../pic/'+reply[i]['pic']+'"width=200px height=250px>'));
+              $("#main #p"+reply[i]['theater_no']).append($('<div id="c'+reply[i]['theater_no']+'">'));
+            }
+            $("#main #c"+reply[i]['theater_no']).append($('<button class="loginmo" name="'+reply[i]['id']+'" tid="'+reply[i]['tid']+'" no="'+reply[i]['theater_no']+'">'+reply[i]['showtime']+'</button>'));
+          }
+          sessionStorage.tempPic = reply[0]['pic'];
+          sessionStorage.tempBranchName = reply[0]['tname'];
+          sessionStorage.tempMovieName = reply[0]['name_th'];
+        }
+      });
+      $("button").click(function(){
+        sessionStorage.tempShowtime = $(this).attr('name');
+        sessionStorage.tempTheater = $(this).attr('tid');
+        sessionStorage.tempTheaterNo = $(this).attr('no');
+        sessionStorage.tempTime = $(this).html();
+        window.location = "selectchair.html";
+      });
+    });
+  </script>
+</html>

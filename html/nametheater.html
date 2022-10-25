@@ -1,0 +1,108 @@
+<!doctype html>
+
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>ข้อมูลโรงภาพยนต์</title>
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/fontAwesome.css">
+        <link rel="stylesheet" type="text/css" href="../css/templatemo-style.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    </head>
+
+
+    <body style="background-image:url('../pic/fan.jpg')" >
+
+        <div class="overlay"></div>
+        <section  class="top-part"  >
+
+        </section>
+
+        <section class="cd-hero">
+
+          <div class="cd-slider-nav">
+            <nav>
+
+              <span class="cd-marker item-1"></span>
+<ul>
+        <li ><a ><div ><img src="../pic/popcorn.jpg"width=400px height=400px></div><h6>สินค้าที่ห้ามพลาดระหว่างรับชมภาพยนต์</h6></a></li>
+
+</ul>
+
+
+                </nav>
+          </div> <!-- .cd-slider-nav -->
+
+          <ul class="cd-hero-slider" >
+
+            <li class="selected"  style="background-color:#000000">
+              <div class="heading"  >
+                <h1>Statistic BRANCH</h1>
+                <span>Welcome To our movie theater</span>
+                <br>
+                <a style="font-size:20px;" href="fornforlogin.html" class="bottom-link">Back</a>
+              </div>
+              <div class="cd-full-width first-slide"  style="background-color:#000000">
+                <div class="container" >
+                  <div class="row" >
+                    <div class="col-md-12">
+                      <div class="content first-contenten" style="background-color:	#CCFFCC" >
+                        <table id="table" width=1140px height=1000px border="2"style="background-color:#CCFFFF">
+                          <thead>
+                            <tr>
+                              <th class="centertb" style="font-size:30px;">รูป</th>
+                              <th class="centertb" style="font-size:30px;">ชื่อ</th>
+                              <th class="centertb" style="font-size:30px;">จำนวนตั๋วที่ออกทั้งหมด (ใบ)</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+
+
+
+
+                <footer style="background-color:#CCFF66" >
+                  <p>Movie Theater &copy; KBD-COMPANY
+
+                  | Designed by <a href="https://www.facebook.com/KaRiTOi11" target="_parent"><em>Karit</em></a></p>
+                </footer>
+    </body>
+    <script>
+      $.ajax({
+        url: "../php/sql.php",
+        type: "POST",
+        data: {
+          sql:"select b.name_th, b.name_en, b.pic, count(t.id) as net from branch b left join card c on c.branch_id = b.id left join ticket t on t.card_id = c.id group by b.id"
+        },
+        async: false,
+        success: function(e) {
+          let reply = JSON.parse(e);
+          for (i in reply)
+          {
+            $("#table tbody").append('<tr><td><img src="../pic/'+reply[i]['pic']+'" class="centertpicth"></td><td class="centertb">'+reply[i]['name_th']+'<br>('+reply[i]['name_en']+')</td><td class="centertb">'+reply[i]['net']+'</td></tr>');
+          }
+        }
+      });
+      $(document).ready(function(){
+        $("#table").dataTable();
+      });
+    </script>
+</html>
